@@ -4,7 +4,6 @@ Some utility methods for Tabular Data Generation
 
 import json
 import logging
-import os
 from typing import Any
 
 import litellm
@@ -37,21 +36,22 @@ def extract_json_as_dict(json_file: str | dict[str, Any] | list[Any]) -> Any:
         return None
 
 
-def prompt_model_rits(
+def prompt_model(
     model: str,
     prompt: str,
     role: str,
-    rits_api_endpoint: str,
+    api_base: str | None = None,
+    api_key: str | None = None,
+    extra_headers: dict[str, Any] | None = None,
 ) -> str:
-    rits_api_endpoint = rits_api_endpoint
     response = litellm.completion(
-        api_base=rits_api_endpoint,
         model=model,
         messages=[
             {"role": f"{role}", "content": f"{prompt}\n"},
         ],
-        extra_headers={"RITS_API_KEY": os.environ["RITS_API_KEY"]},
-        api_key="fake-key",
+        api_base=api_base,
+        api_key=api_key,
+        extra_headers=extra_headers,
     )
 
     return response.choices[0].message["content"]
