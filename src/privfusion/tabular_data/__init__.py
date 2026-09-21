@@ -13,10 +13,12 @@ def generate_tabular_data(
     icl_examples: list,
     model: str,
     NUM_PROMPT_INSTRUCTIONS: int,
-    api_endpoint: str,
     role: str = "user",
-    templates="templates/adult_generation.yaml",
+    templates: str | Path = "templates/adult_generation.yaml",
+    **kwargs: Any,
 ) -> pd.DataFrame:
+    if not kwargs:
+        kwargs = {}
     synth_data = []
     prompt_file_path = os.path.join(
         os.path.dirname(os.path.abspath(__file__)),
@@ -35,11 +37,13 @@ def generate_tabular_data(
         }
         input_prompts = utils.encode_prompt(adult_prompt_gen, adult_gen_inp_dict)
 
-        llm_outputs = utils.prompt_model_rits(
+        llm_outputs = utils.prompt_model(
             model=model,
             prompt=input_prompts,
             role=role,
-            rits_api_endpoint=api_endpoint,
+            api_base=kwargs.get("api_base"),
+            extra_headers=kwargs.get("extra_headers"),
+            api_key=kwargs.get("api_key"),
         )
         records = utils.extract_json_as_dict(llm_outputs)
         if records:

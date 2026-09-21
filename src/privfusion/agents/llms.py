@@ -48,7 +48,9 @@ class WatsonXLLM(LLM):
         response: dict[str, str] = {}
         try:
             result = self._model.generate([messages], **kwargs)
+            print(">>>>")
             pprint(result)
+            print("<<<<")
             logger.info(result)
             messages = result.generations[-1]
             last_message = cast(ChatGeneration, messages[-1]).message
@@ -184,6 +186,7 @@ class OllamaLLM(LLM):
             print(f"Selected model not found: {self._model_name}\n{e.message}")
 
         except Exception as e:
+            print(">>>> EXCEPTION:")
             print(e)
 
         return result

@@ -5,7 +5,7 @@
 
 > **Official Implementation** of "PrivFusion: A Privacy-preserving Multi-Agent Framework for Harmonizing Distributed Datasets"
 
-📄 [Paper](#)
+📄 [Paper](https://arxiv.org/abs/2605.24249)
 
 ---
 
@@ -312,7 +312,7 @@ If you use PrivFusion in your research, please cite our paper:
 @article{privfusion2026,
   title={{PrivFusion}: A Privacy-preserving Multi-Agent Framework for Harmonizing Distributed Datasets},
   author={Anisa Halimi and Liubov Nedoshivina and Kieran Fraser and Stefano Braghin},
-  journal={arXiv preprint arXiv:XXXX.XXXXX},
+  journal={arXiv preprint arXiv:2605.24249},
   year={2026},
 }
 ```

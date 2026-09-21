@@ -85,7 +85,7 @@ class DatasetAnalyzer:
                 SystemMessage(self._description_system_prompt),
                 HumanMessage(
                     "This is sample of the dataset in markdown format:\n\n"
-                    + dataset.sample(n=sample_size).to_markdown(),
+                    + str(dataset.sample(n=sample_size).to_markdown()),
                 ),
             ],
         )
@@ -124,7 +124,7 @@ class DatasetAnalyzer:
         response = self._llm.chat(
             [
                 SystemMessage(self._topics_system_prompt),
-                HumanMessage("SAMPLE:\n" + dataset.sample(n=sample_size).to_markdown()),
+                HumanMessage("SAMPLE:\n" + str(dataset.sample(n=sample_size).to_markdown())),
             ],
         )
 
@@ -148,7 +148,7 @@ class DatasetAnalyzer:
             [
                 SystemMessage(self._struct_description_system_prompt),
                 HumanMessage("COLUMN_NAMES:\n\n" + ",".join(dataset.columns)),
-                HumanMessage("SAMPLE:\n\n" + dataset.sample(n=sample_size).to_markdown()),
+                HumanMessage("SAMPLE:\n\n" + str(dataset.sample(n=sample_size).to_markdown())),
             ],
         )["response"]
 
@@ -165,7 +165,7 @@ class DatasetAnalyzer:
         textual_description = self._llm.chat(
             [
                 SystemMessage(self._relationships_system_prompt),
-                HumanMessage("SAMPLE:\n\n" + dataset.sample(n=sample_size).to_markdown()),
+                HumanMessage("SAMPLE:\n\n" + str(dataset.sample(n=sample_size).to_markdown())),
             ],
         )["response"]
 
