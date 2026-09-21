@@ -9,7 +9,8 @@ from ibm_watsonx_ai.metanames import GenTextParamsMetaNames
 from langchain_core.outputs import ChatGeneration
 from langchain_ibm.chat_models import ChatWatsonx
 from langchain_ollama import ChatOllama
-from litellm import NotFoundError, RateLimitError, Timeout, completion
+from litellm import completion
+from litellm.exceptions import NotFoundError, RateLimitError, Timeout
 from pydantic import SecretStr
 
 logger = logging.getLogger(__name__)
@@ -70,6 +71,44 @@ class WatsonXLLM(LLM):
             print(e)
 
         return response
+
+
+class LiteLLMLLM(LLM):
+    def __init__(self, model_endpoint: str, model_name: str, temperature: float = 0.8):
+        self._model_endpoint = model_endpoint
+        self._model_name = model_name
+        self._temperature = temperature
+
+    def chat(self, messages: list[Any], **kwargs: Any) -> dict[str, str]:
+        result: dict[str, str] = {}
+        try:
+            completion_response = completion(
+                model=self._model_name,
+                messages=messages,
+                api_base=self._model_endpoint,
+                temperature=self._temperature,
+                **kwargs,
+            )
+            response = completion_response.choices[0].message.content
+            reason = completion_response.choices[0].message.reasoning_content
+            result["response"] = response
+            result["reason"] = reason
+
+        except Timeout as e:
+            print(f"Endpoint time out error. Check Metrics Dashboard:\n{e.message}")
+
+        except RateLimitError as e:
+            print(
+                f"Endpoint user rate limit is exceeded\n{e.message}",
+            )
+
+        except NotFoundError as e:
+            print(f"Selected model not found: {self._model_name}\n{e.message}")
+
+        except Exception as e:
+            print(e)
+
+        return result
 
 
 class RitsLLM(LLM):
