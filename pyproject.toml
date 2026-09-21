@@ -32,10 +32,14 @@ dependencies = [
     "langchain-ollama==1.1.0",
     "langchain-ibm==1.0.11",
     "langchain-litellm==0.6.6",
+    "langgraph>=0.2.0",
+    "langchain-core>=0.3.0",
+    "beautifulsoup4>=4.12.0",
+    "requests>=2.31.0",
     "pandas>=2.0.0",
     "pydantic>=2.0.0",
     "python-dotenv>=1.0.0",
-    "readi-privacy>=0.1.4",
+    "readi-privacy>=0.1.6",
     "sdmetrics==0.28.0",
     "SPARQLWrapper==2.0.0",
     "tenacity==9.1.4",
@@ -54,9 +58,9 @@ dev = [
     "ruff",
     "ty",
     "bandit",
-    "notebook==7.5.6",
-    "iprogress==0.4",
-    "ipywidgets==8.1.8",
+    "notebook",
+    "iprogress",
+    "ipywidgets",
 ]
 
 [project.urls]
@@ -127,3 +131,9 @@ ignore = ["E501", "E402", "E701", "F821", "SIM108", "W293"]
 [tool.ruff.format]
 quote-style = "double"
 indent-style = "space"
+
+[dependency-groups]
+dev = [
+    "notebook>=7.5.6",
+    "pytest>=9.0.3",
+]
