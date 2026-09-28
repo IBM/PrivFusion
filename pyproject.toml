@@ -39,6 +39,8 @@ dependencies = [
     "python-dotenv>=1.2.2",
     "readi-privacy>=0.1.7",
     "SPARQLWrapper==2.0.0",
+    # "ibm-watsonx-ai>=1.7.2",
+    "tabulate==0.10.0",
     "tenacity==9.1.4",
     "termcolor==3.3.0",
     "ucimlrepo==0.0.7",

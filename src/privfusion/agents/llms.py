@@ -1,17 +1,13 @@
 import logging
 import os
 from abc import ABC, abstractmethod
-from pprint import pprint
-from typing import Any, cast
+from typing import Any
 
-from dotenv import load_dotenv
-from ibm_watsonx_ai.metanames import GenTextParamsMetaNames
-from langchain_core.outputs import ChatGeneration
-from langchain_ibm.chat_models import ChatWatsonx
+# from ibm_watsonx_ai.metanames import GenTextParamsMetaNames
+# from langchain_ibm.chat_models import ChatWatsonx
 from langchain_ollama import ChatOllama
 from litellm import completion
 from litellm.exceptions import NotFoundError, RateLimitError, Timeout
-from pydantic import SecretStr
 
 logger = logging.getLogger(__name__)
 
@@ -22,55 +18,55 @@ class LLM(ABC):
         raise NotImplementedError()
 
 
-class WatsonXLLM(LLM):
-    def __init__(self, model_name: str):
-        load_dotenv()
+# class WatsonXLLM(LLM):
+#     def __init__(self, model_name: str):
+#         load_dotenv()
 
-        parameters = {
-            # GenTextParamsMetaNames.DECODING_METHOD: "sample",
-            GenTextParamsMetaNames.MAX_NEW_TOKENS: 500,
-            GenTextParamsMetaNames.MIN_NEW_TOKENS: 1,
-            GenTextParamsMetaNames.TEMPERATURE: 0.5,
-            GenTextParamsMetaNames.TOP_K: 50,
-            GenTextParamsMetaNames.TOP_P: 1,
-        }
+#         parameters = {
+#             # GenTextParamsMetaNames.DECODING_METHOD: "sample",
+#             GenTextParamsMetaNames.MAX_NEW_TOKENS: 500,
+#             GenTextParamsMetaNames.MIN_NEW_TOKENS: 1,
+#             GenTextParamsMetaNames.TEMPERATURE: 0.5,
+#             GenTextParamsMetaNames.TOP_K: 50,
+#             GenTextParamsMetaNames.TOP_P: 1,
+#         }
 
-        self._model_name = model_name
-        self._model = ChatWatsonx(
-            model_id=self._model_name,
-            url=SecretStr("https://us-south.ml.cloud.ibm.com"),
-            apikey=SecretStr(os.environ["WATSONX_APIKEY"]),
-            project_id=os.environ["WATSONX_PROJECT_ID"],
-            params=parameters,
-        )
+#         self._model_name = model_name
+#         self._model = ChatWatsonx(
+#             model_id=self._model_name,
+#             url=SecretStr("https://us-south.ml.cloud.ibm.com"),
+#             apikey=SecretStr(os.environ["WATSONX_APIKEY"]),
+#             project_id=os.environ["WATSONX_PROJECT_ID"],
+#             params=parameters,
+#         )
 
-    def chat(self, messages: list[Any], **kwargs: Any) -> dict[str, str]:
-        response: dict[str, str] = {}
-        try:
-            result = self._model.generate([messages], **kwargs)
-            print(">>>>")
-            pprint(result)
-            print("<<<<")
-            logger.info(result)
-            messages = result.generations[-1]
-            last_message = cast(ChatGeneration, messages[-1]).message
-            response["response"] = str(last_message.content)
+#     def chat(self, messages: list[Any], **kwargs: Any) -> dict[str, str]:
+#         response: dict[str, str] = {}
+#         try:
+#             result = self._model.generate([messages], **kwargs)
+#             print(">>>>")
+#             pprint(result)
+#             print("<<<<")
+#             logger.info(result)
+#             messages = result.generations[-1]
+#             last_message = cast(ChatGeneration, messages[-1]).message
+#             response["response"] = str(last_message.content)
 
-        except Timeout as e:
-            print(f"WatsonX time out error. Check Metrics Dashboard:\n{e.message}")
+#         except Timeout as e:
+#             print(f"WatsonX time out error. Check Metrics Dashboard:\n{e.message}")
 
-        except RateLimitError as e:
-            print(
-                f"WatsonX user rate limit (8 requests per second) is exceeded\n{e.message}",
-            )
+#         except RateLimitError as e:
+#             print(
+#                 f"WatsonX user rate limit (8 requests per second) is exceeded\n{e.message}",
+#             )
 
-        except NotFoundError as e:
-            print(f"Selected model not found: {self._model_name}\n{e.message}")
+#         except NotFoundError as e:
+#             print(f"Selected model not found: {self._model_name}\n{e.message}")
 
-        except Exception as e:
-            print(e)
+#         except Exception as e:
+#             print(e)
 
-        return response
+#         return response
 
 
 class LiteLLMLLM(LLM):
