@@ -37,7 +37,7 @@ dependencies = [
     "requests>=2.31.0",
     "pydantic>=2.0.0",
     "python-dotenv>=1.2.2",
-    "readi-privacy>=0.1.7",
+    "readi-privacy @ git+https://github.com/IBM/READI.git@main",
     "SPARQLWrapper==2.0.0",
     # "ibm-watsonx-ai>=1.7.2",
     "tabulate==0.10.0",
@@ -68,6 +68,9 @@ Homepage = "https://github.com/IBM/privfusion"
 Documentation = "https://github.com/IBM/privfusion#readme"
 "Bug Tracker" = "https://github.com/IBM/privfusion/issues"
 "Source Code" = "https://github.com/IBM/privfusion"
+
+[tool.hatch.metadata]
+allow-direct-references = true
 
 [tool.hatch.version]
 path = "src/privfusion/__init__.py"
