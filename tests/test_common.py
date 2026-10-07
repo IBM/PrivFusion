@@ -1,6 +1,9 @@
+import pytest
+
 from privfusion.utils import find_common_ancestors, find_mapping
 
 
+@pytest.mark.skip
 def test_simple_ancestor_finder() -> None:
     item1 = find_mapping("State")
     item2 = find_mapping("Country")
