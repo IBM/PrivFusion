@@ -30,7 +30,7 @@ classifiers = [
 ]
 dependencies = [
     "langchain-ollama>=1.1.0",
-    "langchain-litellm==0.8.0",
+    "langchain-litellm==0.11.2",
     "langgraph>=1.2.12",
     "langchain-core>=1.6.4",
     "beautifulsoup4>=4.12.0",
