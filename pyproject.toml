@@ -44,7 +44,7 @@ dependencies = [
     "tenacity==9.2.1",
     "termcolor==3.3.0",
     "ucimlrepo==0.0.7",
-    "kagglehub==1.0.1",
+    "kagglehub==1.0.3",
     "jsonschema==4.26.0",
 ]
 
