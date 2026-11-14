@@ -37,7 +37,7 @@ dependencies = [
     "requests>=2.31.0",
     "pydantic>=2.0.0",
     "python-dotenv>=1.2.2",
-    "readi-privacy>=0.1.10",
+    "readi-privacy>=0.1.11",
     "SPARQLWrapper==2.0.0",
     # "ibm-watsonx-ai>=1.7.2",
     "tabulate==0.10.0",
