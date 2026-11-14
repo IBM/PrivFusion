@@ -7,7 +7,7 @@ name = "privfusion"
 version = "0.0.1"
 description = "LLM-powered framework for aligning and consolidating heterogeneous tabular datasets"
 readme = "README.md"
-requires-python = ">=3.11,<3.14"
+requires-python = ">=3.11.5,<3.14"
 license = "Apache-2.0"
 authors = [
     {name="Stefano Braghin", email="stefanob@ie.ibm.com"},
